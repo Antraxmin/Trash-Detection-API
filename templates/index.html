@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trash Detection</title>
+  </head>
+  <body>
+    <h1>Trash Detection</h1>
+    <form
+      id="uploadForm"
+      action="http://localhost:8000/predict/"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="file" accept=".jpg, .jpeg, .png" />
+      <button type="submit">Upload Image</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          let formData = new FormData();
+          let fileInput = document.querySelector('input[type="file"]');
+          formData.append("file", fileInput.files[0]);
+
+          try {
+            let response = await fetch("http://localhost:8000/predict/", {
+              method: "POST",
+              body: formData,
+            });
+            let data = await response.json();
+            displayResult(data);
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+
+      function displayResult(data) {
+        let resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+                <p><strong>Result:</strong> ${data.result}</p>
+                <img src="data:image/jpeg;base64,${data.image}" alt="Prediction Image" style="max-width: 100%; height: auto;">
+            `;
+      }
+    </script>
+  </body>
+</html>
