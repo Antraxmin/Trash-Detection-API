@@ -1,4 +1,4 @@
-# Trash-Detection-API 🚮📷
+# Trash-Detection-API
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-green.svg)](https://fastapi.tiangolo.com/)
@@ -6,16 +6,12 @@
 
 Trash Detection API is an open-source project leveraging YOLO (You Only Look Once) for detecting trash in images. This project uses FastAPI for the backend server and serves a simple web interface for uploading images and viewing detection results.
 
-<br />
-
 ## Features
 
 - **Real-time Object Detection**: Detects trash in images using a custom-trained YOLO model optimized for trash detection.
 - **Fast and Efficient**: Uses FastAPI for handling requests at lightning speed.
 - **User-Friendly Interface**: Simple web interface for uploading images and viewing detection results.
 - **Base64 Image Encoding**: Returns images with detected trash in Base64 format for easy integration.
-
-<br />
 
 ## Installation
 
@@ -50,22 +46,16 @@ To get started with Trash Detection, follow these steps:
 
    Open your browser and go to `http://127.0.0.1:8000`.
 
-<br />
-
 ### Example Request
 
 ```
 curl -X POST "http://localhost:8000/predict/" -F "file=@image.jpg"
 ```
 
-<br />
-
 ## Usage
 
 - **Upload Image**: Use the web interface to upload an image.
 - **View Results**: The server will return the image with detected trash highlighted in bounding boxes, along with the count of detected objects.
-
-<br />
 
 ## Contact
 
