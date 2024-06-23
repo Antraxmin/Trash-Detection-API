@@ -4,19 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trash Detection</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <h1>Trash Detection</h1>
-    <form
-      id="uploadForm"
-      action="http://localhost:8000/predict/"
-      method="post"
-      enctype="multipart/form-data"
-    >
-      <input type="file" name="file" accept=".jpg, .jpeg, .png" />
-      <button type="submit">Upload Image</button>
-    </form>
-    <div id="result"></div>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">ECOHI Trash Detection</h1>
+      <form
+        id="uploadForm"
+        action="http://localhost:8000/predict/"
+        method="post"
+        enctype="multipart/form-data"
+        class="border p-4 rounded"
+      >
+        <div class="form-group">
+          <label for="fileInput">Upload an Image</label>
+          <input
+            type="file"
+            name="file"
+            id="fileInput"
+            accept=".jpg, .jpeg, .png"
+            class="form-control-file"
+          />
+        </div>
+        <button type="submit" class="btn btn-success btn-block">
+          Upload Image
+        </button>
+      </form>
+      <div id="result" class="mt-4"></div>
+      <div class="footer text-center">
+        <p>
+          &copy; 2024
+          <a href="https://www.instagram.com/ecohi_official/" target="_blank"
+            >ECOHI</a
+          >. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
       document
@@ -25,7 +55,7 @@
           event.preventDefault();
 
           let formData = new FormData();
-          let fileInput = document.querySelector('input[type="file"]');
+          let fileInput = document.getElementById("fileInput");
           formData.append("file", fileInput.files[0]);
 
           try {
@@ -43,9 +73,14 @@
       function displayResult(data) {
         let resultDiv = document.getElementById("result");
         resultDiv.innerHTML = `
-                <p><strong>Result:</strong> ${data.result}</p>
-                <img src="data:image/jpeg;base64,${data.image}" alt="Prediction Image" style="max-width: 100%; height: auto;">
-            `;
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Result</h5>
+              <p class="card-text">${data.result}</p>
+              <img src="data:image/jpeg;base64,${data.image}" alt="Prediction Image" class="img-fluid">
+            </div>
+          </div>
+        `;
       }
     </script>
   </body>
