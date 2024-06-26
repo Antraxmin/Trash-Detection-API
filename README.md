@@ -6,6 +6,10 @@
 
 Trash Detection API is an open-source project leveraging YOLO (You Only Look Once) for detecting trash in images. This project uses FastAPI for the backend server and serves a simple web interface for uploading images and viewing detection results.
 
+## Demo
+
+<img width="739" alt="스크린샷 2024-06-26 오후 1 15 56" src="https://github.com/Antraxmin/Antraxmin/assets/77287236/0c7e6e7e-f049-487f-b75f-114b48ea05fa">
+
 ## Features
 
 - **Real-time Object Detection**: Detects trash in images using a custom-trained YOLO model optimized for trash detection.
