@@ -1,2 +1,4 @@
 __pycache__/
 .vercel
+models/
+models/best.pt
