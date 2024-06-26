@@ -64,6 +64,7 @@
               body: formData,
             });
             let data = await response.json();
+            console.log(data);
             displayResult(data);
           } catch (error) {
             console.error("Error:", error);
@@ -72,11 +73,17 @@
 
       function displayResult(data) {
         let resultDiv = document.getElementById("result");
+
+        let categoriesHtml = "";
+        for (let label in data.label_counts) {
+          categoriesHtml += `<p class="card-text">${label} : ${data.label_counts[label]}개</p>`;
+        }
         resultDiv.innerHTML = `
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Result</h5>
-              <p class="card-text">${data.result}</p>
+              <p class="card-text">전체 쓰레기 개수 : ${data.count}개</p>
+              ${categoriesHtml}
               <img src="data:image/jpeg;base64,${data.image}" alt="Prediction Image" class="img-fluid">
             </div>
           </div>
