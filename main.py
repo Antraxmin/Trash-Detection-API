@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import base64
+from label import label_map 
 
 app = FastAPI()
 
