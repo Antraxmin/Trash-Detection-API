@@ -16,10 +16,20 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
+    """
+    Root endpoint - rendering index.html 
+    """
     return templates.TemplateResponse("index.html", {"request": request})
 
+# predict endpoint - Receive image files and perform object detection using the trash-detection model
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
+    """
+    Args:
+        file (UploadFile): image 
+    Returns:
+        JSONResponse: Number of objects detected, number of objects by each label, image (base64 encoding)
+    """
     contents = await file.read()
     np_img = np.frombuffer(contents, np.uint8) 
     img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
