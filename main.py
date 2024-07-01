@@ -9,7 +9,7 @@ from label import label_map
 
 app = FastAPI()
 
-MODEL_PATH = 'models/best.pt'
+MODEL_PATH = 'models/best_trash.pt'
 model = YOLO(MODEL_PATH)
 
 templates = Jinja2Templates(directory="templates")
