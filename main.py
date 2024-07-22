@@ -1,15 +1,37 @@
 from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.cors import CORSMiddleware
 import cv2
 import numpy as np
 from ultralytics import YOLO
 import base64
-from label import label_map 
+from label import label_map
+import boto3
+import os
 
 app = FastAPI()
 
-MODEL_PATH = 'models/best_trash.pt'
+# CORS 미들웨어 설정
+orig_cors = ["http://localhost:8000", "http://127.0.0.1:8000"]  # 허용할 도메인 목록
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=orig_cors,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# AWS S3 설정
+S3_BUCKET = 'ecohi'
+MODEL_KEY = 'best_trash.pt'
+MODEL_PATH = '/tmp/best_trash.pt'  # EC2 인스턴스의 임시 디렉토리
+
+# AWS S3에서 모델 다운로드
+s3 = boto3.client('s3')
+s3.download_file(S3_BUCKET, MODEL_KEY, MODEL_PATH)
+
+# 모델 로드
 model = YOLO(MODEL_PATH)
 
 templates = Jinja2Templates(directory="templates")
@@ -21,7 +43,6 @@ async def read_root(request: Request):
     """
     return templates.TemplateResponse("index.html", {"request": request})
 
-# predict endpoint - Receive image files and perform object detection using the trash-detection model
 @app.post("/predict/")
 async def predict(file: UploadFile = File(...)):
     """
